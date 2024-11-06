@@ -1,0 +1,37 @@
+spring:
+  application:
+    name: notification-service
+  datasource:
+    url: jdbc:postgresql://${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}?currentSchema=${POSTGRES_SCHEMA}&serverTimezone=UTC
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+  flyway:
+    schemas: notifications-service
+    locations: classpath:db/migration
+  kafka:
+    bootstrap-servers: localhost:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+
+server:
+  port: 8080
+
+security:
+  client:
+    base-url: http://localhost:8080/api/v1
+  token:
+    secret-key: ${TOKEN_SECRET_KEY}
+    ttl: ${ACCESS_TOKEN_TTL}
+
+# Topics config
+topics:
+  outbound:
+    send-notification: notification-service-send-notification-topic
+
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG

@@ -1,0 +1,3 @@
+CREATE extension pgcrypto;
+
+

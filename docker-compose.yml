@@ -1,0 +1,12 @@
+version: '3.7'
+services:
+  postgres-notification-service:
+    image: postgres:15.3-alpine
+    restart: 'always'
+    container_name: notification-service-postgres
+    ports:
+      - 5434:5432
+    environment:
+      POSTGRES_DB: notifications-db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
